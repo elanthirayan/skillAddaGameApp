@@ -1,6 +1,6 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.skilladdagame.app" version="1.0.1" versionCode="10">
-  <name>Skill Adda</name>
-  <description>Game Based skill development.</description>
+  <name>Skill Adda Game Testing</name>
+  <description>This is testing 3d game development local</description>
   <author href="http://skilladda.com" email="info@axinovate.com">Gautam Choudhury</author>
   <content src="index.html"/>
   <preference name="permissions" value="none"/>
