@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<!--	<meta http-equiv="refresh" content="0; url=http://skilladda.com" />	-->
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/push.js"></script>
+</head>
+<body id="textBody" onload="ready();">
+	<div id="html">
+		<div id="loading">
+			<img id="loading-image" src="skillAdda.jpg" alt="SkillAdda" />
+		</div>
+		<div id="loading1" style="display:none;">
+			<!--
+			<img id="loading-image" src="skilladda_logo_black.png" alt="SkillAdda" />	-->
+			<div class="error_msg" id="message"></div><br><br>
+			<div class="error_log" id="log_msg"></div>
+		</div>	
+	</div>
+	<script type="text/javascript">
+		var ref;
+		var ch=0;
+		function ready(){
+			document.addEventListener("deviceready", onDeviceReady, false);
+			setTimeout(function(){
+			},5000);
+		}
+		
+		// loop function to check connection
+		function check_loop_connection(){
+			setTimeout(function() {
+				if(navigator.network.connection.type=='none'){
+					 ref.close();
+					 location.reload();
+				}
+				else{
+					check_loop_connection();
+				}
+			 }, 5000);
+		}
+		// device APIs are available
+		function onDeviceReady() {
+			var  networkConnectionType =  navigator.network.connection.type;
+         	var element = document.getElementById('message');
+			var log = document.getElementById('log_msg');
+			element.innerHTML = '';
+			if(networkConnectionType=='none'){
+				document.getElementById('loading1').style.display = "block";
+				element.innerHTML = 'Please connect to your internet connection and try again!';
+				//alert(element.innerHTML);
+			}
+			else{
+			//	element.innerHTML = '<a target="_blank" onClick=goToUrl();>Go to test-SkillAdda</a>';
+				setTimeout(
+					function(){
+						ref=window.open('http://192.168.2.16:8081/test/check/game','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+						// to check connection is working or not
+						check_loop_connection();
+						
+						// Windows App
+						//window.open('http://www.skilladda.com?os=wi','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+						//window.open('http://devskilladda.xucorelms.com','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+					},3000);
+			}		
+			if ( typeof PushNotification == 'function' ) { 
+				log.innerHTML = 'init present<br>';
+			}
+			else
+			{
+				log.innerHTML = 'init not exists<br>';
+			}
+			var push = PushNotification.init({ "android": {"senderID": "50957485970"},
+				 "ios": {"alert": "true", "badge": "true", "sound": "true"}, "windows": {} } );
+			alert(push);
+			push.on('registration', function(data) {
+				log.innerHTML = log.innerHTML+"registration:"+data.registrationId;
+				// data.registrationId
+			});
+			push.on('notification', function(data) {
+				log.innerHTML = log.innerHTML+"notification:"+data.message;
+				// data.message,
+				// data.title,
+				// data.count,
+				// data.sound,
+				// data.image,
+				// data.additionalData
+			});
+
+			push.on('error', function(e) {
+				log.innerHTML = log.innerHTML+"error:"+e.message;
+				// e.message
+			});
+		}
+		function checkConnection(){
+			var  networkConnectionType =  navigator.network.connection.type;
+			if(networkConnectionType=='none'){
+				return true;
+			}else{
+				return false;
+			}
+		}
+		function goToUrl(){
+			var  networkConnectionType =  navigator.network.connection.type;
+			if(networkConnectionType=='none'){
+				loader();
+				var element = document.getElementById('message');
+				element.innerHTML = 'Please connect to your internet connection and try again!';
+				alert(element.innerHTML);
+				return false;
+			}
+			else{
+			//	var body = document.getElementById('textBody');
+			//	body.innerHTML = '<div id="loading"><img id="loading-image" src="skillAdda.jpg" alt="SkillAdda" /></div><div id="loading1" style="display:none;"><div class="error_msg" id="message"></div><br><br><div class="error_log" id="log_msg"></div></div>';
+				// Windows App
+				//window.open('http://www.skilladda.com?os=wi','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+				ref = window.open('http://192.168.2.16:8081/test/check/game','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+				//window.open('http://devskilladda.xucorelms.com?os=wi','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+				return false;
+			}
+		}
+		function login(){
+			var  networkConnectionType =  navigator.network.connection.type;
+			if(networkConnectionType=='none'){
+				loader();
+				var element = document.getElementById('message');
+				element.innerHTML = 'Please connect to your internet connection and try again!';
+				alert(element.innerHTML);
+				return false;
+			}
+			else{
+			//	var body = document.getElementById('textBody');
+			//	body.innerHTML = '<div id="loading"><img id="loading-image" src="skillAdda.jpg" alt="SkillAdda" /></div><div id="loading1" style="display:none;"><div class="error_msg" id="message"></div><br><br><div class="error_log" id="log_msg"></div></div>';
+			
+				// Windows App
+				//window.open('http://www.skilladda.com/admin_home/login_form?os=wi','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+				ref = window.open('http://www.skilladda.com/admin_home/login_form?os=wi','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+				//window.open('http://devskilladda.xucorelms.com/admin_home/login_form?os=wi','_self','location=no','hidden=yes','clearsessioncache=yes','toolbar=no','clearcache=yes','fullscreen=yes','hardwareback=no');
+				return false;
+			}
+		}
+		/*function exitWindow(){
+			navigator.app.exitApp();
+		}*/
+		
+		
+		var screen_width = screen.width;
+		var base_url = window.location.origin;
+		function loader(){
+			if(screen_width<992){
+				var body = document.getElementById('textBody');
+				body.innerHTML = '<div id="loading1"><img id="loading-image1" src="loading.gif" alt="Loading..." /></div>';
+			}
+		};
+	</script>			
+</body>
+<footer style="position:fixed; bottom:0px; width:100%; z-index:99; background-color:#2F2F2F; opacity:0.4;">
+	<a target="_blank" class="footer-btn-group" style="border-right:2px solid black;" onClick=goToUrl(); >
+		<span>Home</span>
+	</a>
+	<!--<a target="_blank" class="footer-btn-group" onClick=exitWindow(); >
+		<span>Exit</span>
+	</a>-->
+	<a target="_blank" class="footer-btn-group" onClick=login(); >
+		<span>Log In</span>
+	</a>
+</footer>
+</html>
